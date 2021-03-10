@@ -347,7 +347,7 @@ export default class Avatar {
 
   private addNose(face: string[][]): string[][] {
     let noseWidth = Math.round(this.face.width * this.nose.width * 10 / 100);
-    let noseHeight = Math.round(this.face.height * this.nose.height * 10 / 100);
+    const noseHeight = Math.round(this.face.height * this.nose.height * 10 / 100);
     const faceWidthIsEven = this.face.width % 2 === 0;
     const noseIsEven = noseWidth % 2 === 0;
     if (faceWidthIsEven !== noseIsEven) {
@@ -405,26 +405,22 @@ export default class Avatar {
   }
 
   importFaceConfig(config: string) {
-    try {
-      const avatar = JSON.parse(config);
-      this.setFace(avatar.face);
-      this.setHair(avatar.hair);
-      this.setNose(avatar.nose);
-      this.setMouth(avatar.mouth);
-      this.setEye(avatar.eye);
-    } catch (err) {
-      console.error(err);
-    }
+    const avatar = JSON.parse(config);
+    this.setFace(avatar.face);
+    this.setHair(avatar.hair);
+    this.setNose(avatar.nose);
+    this.setMouth(avatar.mouth);
+    this.setEye(avatar.eye);
   }
 
   getHTML(): string {
     const faceBitmap = this.getFace();
     let innerHTML = '<style>.row {display: flex;} .block{ width: 10px; height: 10px; }</style>';
 
-    for (let i = 0; i < faceBitmap.length; i++) {
+    for (const line of faceBitmap) {
       innerHTML += '<div class="row">';
-      for (let j = 0; j < faceBitmap[i].length; j++) {
-        innerHTML += `<div class="block" style="background-color:${faceBitmap[i][j]}"></div>`;
+      for (const pixel of line) {
+        innerHTML += `<div class="block" style="background-color:${pixel}"></div>`;
       }
       innerHTML += '</div>'
     }
@@ -470,9 +466,9 @@ export default class Avatar {
     G = (G<255)?G:255;  
     B = (B<255)?B:255;  
 
-    var RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
-    var GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
-    var BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
+    const RR = ((R.toString(16).length===1)?"0"+R.toString(16):R.toString(16));
+    const GG = ((G.toString(16).length===1)?"0"+G.toString(16):G.toString(16));
+    const BB = ((B.toString(16).length===1)?"0"+B.toString(16):B.toString(16));
 
     return "#"+RR+GG+BB;
   }
