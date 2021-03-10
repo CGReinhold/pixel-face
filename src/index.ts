@@ -41,7 +41,7 @@ export default class Avatar {
   private resolution: number;
 
   constructor(
-    config: { eye?: Eye; hair?: Hair; face?: Face; mouth?: Mouth; nose?: Nose; resolution?: number } | undefined,
+    config?: { eye?: Eye; hair?: Hair; face?: Face; mouth?: Mouth; nose?: Nose; resolution?: number },
   ) {
     this.hair = config?.hair || {
       color: '#' + Math.floor(Math.random() * 16777215).toString(16),
