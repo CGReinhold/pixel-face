@@ -32,7 +32,7 @@ interface Nose {
   height: number;
 }
 
-class Avatar {
+export default class Avatar {
   private hair: Hair;
   private eye: Eye;
   private face: Face;
@@ -40,31 +40,31 @@ class Avatar {
   private nose: Nose;
   private resolution: number;
   
-  constructor({ eye, hair, face, mouth, nose, resolution }: { eye?: Eye, hair?: Hair, face?: Face, mouth?: Mouth, nose?: Nose, resolution?: number } | undefined) {
-    this.hair = hair || {
+  constructor(config: { eye?: Eye, hair?: Hair, face?: Face, mouth?: Mouth, nose?: Nose, resolution?: number } | undefined) {
+    this.hair = config?.hair || {
       color: '#' + Math.floor(Math.random()*16777215).toString(16),
       length: this.randomNumber(0, 10),
       style: Math.random() > 0.5 ? 'top' : 'bottom',
     };
-    this.eye = eye || {
+    this.eye = config?.eye || {
       color: this.getRandomEyeColor(),
       verticalMargin: this.randomNumber(-2, 2),
       horizontalMargin: this.randomNumber(0, 2),
     };
-    this.face = face || {
+    this.face = config?.face || {
       color: this.getRandomFaceColor(),
       width: this.randomNumber(5, 15),
       height: this.randomNumber(5, 15),
       pointiness: this.randomNumber(0, 30),
     };
-    this.mouth = mouth || {
+    this.mouth = config?.mouth || {
       width: this.randomNumber(1, 5),
     };
-    this.nose = nose || {
+    this.nose = config?.nose || {
       width: this.randomNumber(0, 3),
       height: this.randomNumber(0, 5),
     };
-    this.resolution = resolution || this.randomNumber(1, 10);
+    this.resolution = config?.resolution || this.randomNumber(1, 10);
     this.adjustFaceSize();
   }
 
@@ -86,7 +86,7 @@ class Avatar {
     }
   }
 
-  setMouth({ width }: { width?: number }) {
+  setMouth({ width }: { width: number }) {
     if (width >= 0 && width <= 5) {
       this.mouth.width = width;
     }
@@ -200,7 +200,7 @@ class Avatar {
   private createFace(): string[][] {
     const sideSize = this.getImageSize();
     const isEven = this.isEven();
-    const faceBitMap = [];
+    const faceBitMap: string[][] = [];
 
     const widthStartIndex = this.getLeftX();
     const widthEndIndex = this.getRightX();
