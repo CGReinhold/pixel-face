@@ -39,10 +39,12 @@ export default class Avatar {
   private mouth: Mouth;
   private nose: Nose;
   private resolution: number;
-  
-  constructor(config: { eye?: Eye, hair?: Hair, face?: Face, mouth?: Mouth, nose?: Nose, resolution?: number } | undefined) {
+
+  constructor(
+    config: { eye?: Eye; hair?: Hair; face?: Face; mouth?: Mouth; nose?: Nose; resolution?: number } | undefined,
+  ) {
     this.hair = config?.hair || {
-      color: '#' + Math.floor(Math.random()*16777215).toString(16),
+      color: '#' + Math.floor(Math.random() * 16777215).toString(16),
       length: this.randomNumber(0, 10),
       style: Math.random() > 0.5 ? 'top' : 'bottom',
     };
@@ -68,7 +70,7 @@ export default class Avatar {
     this.adjustFaceSize();
   }
 
-  setHair({ color, length, style }: { color?: string, length?: number, style?: HairStyle }) {
+  setHair({ color, length, style }: { color?: string; length?: number; style?: HairStyle }) {
     if (color) {
       this.hair.color = color;
     }
@@ -92,7 +94,7 @@ export default class Avatar {
     }
   }
 
-  setNose({ width, height }: { width?: number, height?: number }) {
+  setNose({ width, height }: { width?: number; height?: number }) {
     if (width !== undefined && width >= 0 && width <= 4) {
       this.nose.width = width;
     }
@@ -101,7 +103,15 @@ export default class Avatar {
     }
   }
 
-  setEye({ color, verticalMargin, horizontalMargin }: { color?: EyeColor, verticalMargin?: number, horizontalMargin?: number }) {
+  setEye({
+    color,
+    verticalMargin,
+    horizontalMargin,
+  }: {
+    color?: EyeColor;
+    verticalMargin?: number;
+    horizontalMargin?: number;
+  }) {
     if (color) {
       this.eye.color = color;
     }
@@ -113,7 +123,17 @@ export default class Avatar {
     }
   }
 
-  setFace({ color, width, height, pointiness }: { color?: FaceColor, width?: number, height?: number, pointiness?: number }) {
+  setFace({
+    color,
+    width,
+    height,
+    pointiness,
+  }: {
+    color?: FaceColor;
+    width?: number;
+    height?: number;
+    pointiness?: number;
+  }) {
     if (color) {
       this.face.color = color;
     }
@@ -149,25 +169,39 @@ export default class Avatar {
 
   private getEyeColor() {
     switch (this.eye.color) {
-      case 'black': return '#000';
-      case 'blue': return '#00a';
-      case 'dark-brown': return '#5c3836';
-      case 'gray': return '#aaa';
-      case 'green': return '#0a0';
-      case 'light-brown': return '#ad6452';
+      case 'black':
+        return '#000';
+      case 'blue':
+        return '#00a';
+      case 'dark-brown':
+        return '#5c3836';
+      case 'gray':
+        return '#aaa';
+      case 'green':
+        return '#0a0';
+      case 'light-brown':
+        return '#ad6452';
     }
   }
 
   private getFaceColor() {
     switch (this.face.color) {
-      case 'black': return '#000';
-      case 'dark-brown': return '#5c3836';
-      case 'brown': return '#704139';
-      case 'light-brown': return '#ad6452';
-      case 'red': return '#a01900';
-      case 'salmon': return '#ffe0bd';
-      case 'white': return '#fff5e1';
-      case 'yellow': return '#e3cc88';
+      case 'black':
+        return '#000';
+      case 'dark-brown':
+        return '#5c3836';
+      case 'brown':
+        return '#704139';
+      case 'light-brown':
+        return '#ad6452';
+      case 'red':
+        return '#a01900';
+      case 'salmon':
+        return '#ffe0bd';
+      case 'white':
+        return '#fff5e1';
+      case 'yellow':
+        return '#e3cc88';
     }
   }
 
@@ -216,7 +250,7 @@ export default class Avatar {
             if (isEven && (j === sideSize / 2 || j === sideSize / 2 - 1)) {
               faceBitMap[i][j] = this.getFaceColor();
             }
-            if (!isEven && (j >= Math.floor(sideSize / 2) - 1 && j <= Math.ceil(sideSize / 2))) {
+            if (!isEven && j >= Math.floor(sideSize / 2) - 1 && j <= Math.ceil(sideSize / 2)) {
               faceBitMap[i][j] = this.getFaceColor();
             }
           }
@@ -226,7 +260,7 @@ export default class Avatar {
       }
     }
 
-    let pointinessPercentage = Math.floor(this.face.width * this.face.pointiness / 100);
+    let pointinessPercentage = Math.floor((this.face.width * this.face.pointiness) / 100);
     let indexY = heightEndIndex;
     while (pointinessPercentage > 0) {
       for (let i = 0; i < pointinessPercentage; i++) {
@@ -270,7 +304,7 @@ export default class Avatar {
       for (let i = 0; i < hairLength; i++) {
         let startX = widthStartIndex;
         let endX = widthEndIndex + 1;
-  
+
         if (isLargeFace) {
           startX += 3;
           endX -= 3;
@@ -289,7 +323,7 @@ export default class Avatar {
       for (let i = 0; i < hairLength; i++) {
         let startX = widthStartIndex;
         let endX = widthEndIndex + 1;
-        
+
         if (i === 0) {
           if (isLargeFace) {
             startX += 3;
@@ -312,7 +346,7 @@ export default class Avatar {
           startX += 1;
           endX -= 1;
         }
-        
+
         for (let j = startX; j < endX; j++) {
           if (face[heightStartIndex + i][j] === '#fff') {
             face[heightStartIndex + i][j] = this.hair.color;
@@ -320,34 +354,34 @@ export default class Avatar {
         }
       }
     }
-    
+
     return face;
   }
 
   private addEyes(face: string[][]): string[][] {
-    const eyeYAxis = this.getBottomY() - Math.floor(this.face.height * 75 / 100) + this.eye.verticalMargin;
+    const eyeYAxis = this.getBottomY() - Math.floor((this.face.height * 75) / 100) + this.eye.verticalMargin;
 
-    let firstEyeXAxis = this.getRightX() - Math.floor(this.face.width * 30 / 100) + this.eye.horizontalMargin;
-    const secondEyeXAxis = this.getRightX() - Math.floor(this.face.width * 70 / 100) - this.eye.horizontalMargin;
+    let firstEyeXAxis = this.getRightX() - Math.floor((this.face.width * 30) / 100) + this.eye.horizontalMargin;
+    const secondEyeXAxis = this.getRightX() - Math.floor((this.face.width * 70) / 100) - this.eye.horizontalMargin;
     while (firstEyeXAxis - secondEyeXAxis < 2) {
       firstEyeXAxis++;
     }
 
     face[eyeYAxis][firstEyeXAxis] = 'white';
-    face[eyeYAxis][firstEyeXAxis+1] = 'white';
-    face[eyeYAxis+1][firstEyeXAxis] = 'white';
-    face[eyeYAxis+1][firstEyeXAxis+1] = this.getEyeColor();
+    face[eyeYAxis][firstEyeXAxis + 1] = 'white';
+    face[eyeYAxis + 1][firstEyeXAxis] = 'white';
+    face[eyeYAxis + 1][firstEyeXAxis + 1] = this.getEyeColor();
 
     face[eyeYAxis][secondEyeXAxis] = 'white';
-    face[eyeYAxis][secondEyeXAxis+1] = 'white';
-    face[eyeYAxis+1][secondEyeXAxis] = 'white';
-    face[eyeYAxis+1][secondEyeXAxis+1] = this.getEyeColor();
+    face[eyeYAxis][secondEyeXAxis + 1] = 'white';
+    face[eyeYAxis + 1][secondEyeXAxis] = 'white';
+    face[eyeYAxis + 1][secondEyeXAxis + 1] = this.getEyeColor();
     return face;
   }
 
   private addNose(face: string[][]): string[][] {
-    let noseWidth = Math.round(this.face.width * this.nose.width * 10 / 100);
-    const noseHeight = Math.round(this.face.height * this.nose.height * 10 / 100);
+    let noseWidth = Math.round((this.face.width * this.nose.width * 10) / 100);
+    const noseHeight = Math.round((this.face.height * this.nose.height * 10) / 100);
     const faceWidthIsEven = this.face.width % 2 === 0;
     const noseIsEven = noseWidth % 2 === 0;
     if (faceWidthIsEven !== noseIsEven) {
@@ -355,8 +389,8 @@ export default class Avatar {
     }
 
     const faceCenter = face.length / 2;
-    const noseYAxis = this.getBottomY() - Math.floor(this.face.height * 40 / 100);
-    const noseXAxis = Math.floor(faceCenter - (noseWidth / 2));
+    const noseYAxis = this.getBottomY() - Math.floor((this.face.height * 40) / 100);
+    const noseXAxis = Math.floor(faceCenter - noseWidth / 2);
 
     const color = this.shadeColor(this.getFaceColor(), -30);
     for (let i = 0; i < noseWidth; i++) {
@@ -369,14 +403,14 @@ export default class Avatar {
   }
 
   private addMouth(face: string[][]): string[][] {
-    let mouthWidth = Math.round(this.face.width * this.mouth.width * 10 / 100);
+    let mouthWidth = Math.round((this.face.width * this.mouth.width * 10) / 100);
     const faceWidthIsEven = this.face.width % 2 === 0;
     const mouthIsEven = mouthWidth % 2 === 0;
     if (faceWidthIsEven !== mouthIsEven) {
       mouthWidth++;
     }
-    const mouthYAxis = this.getBottomY() - Math.floor(this.face.height * 20 / 100);
-    const mouthXAxis = Math.floor((face.length / 2) - (mouthWidth / 2));
+    const mouthYAxis = this.getBottomY() - Math.floor((this.face.height * 20) / 100);
+    const mouthXAxis = Math.floor(face.length / 2 - mouthWidth / 2);
 
     for (let i = 0; i < mouthWidth; i++) {
       face[mouthYAxis][mouthXAxis + i] = '#ff0000';
@@ -400,7 +434,7 @@ export default class Avatar {
       eye: this.eye,
       nose: this.nose,
       mouth: this.mouth,
-    }
+    };
     return JSON.stringify(object);
   }
 
@@ -422,9 +456,9 @@ export default class Avatar {
       for (const pixel of line) {
         innerHTML += `<div class="block" style="background-color:${pixel}"></div>`;
       }
-      innerHTML += '</div>'
+      innerHTML += '</div>';
     }
-    return innerHTML
+    return innerHTML;
   }
 
   getFullHTML(): string {
@@ -454,22 +488,22 @@ export default class Avatar {
 
   private shadeColor(color: string, percent: number) {
     if (color === '#000' && percent < 0) return '#222';
-    let R: number = parseInt(color.substring(1,3),16);
-    let G: number = parseInt(color.substring(3,5),16);
-    let B: number = parseInt(color.substring(5,7),16);
+    let R: number = parseInt(color.substring(1, 3), 16);
+    let G: number = parseInt(color.substring(3, 5), 16);
+    let B: number = parseInt(color.substring(5, 7), 16);
 
-    R = Math.round(R * (100 + percent) / 100);
-    G = Math.round(G * (100 + percent) / 100);
-    B = Math.round(B * (100 + percent) / 100);
+    R = Math.round((R * (100 + percent)) / 100);
+    G = Math.round((G * (100 + percent)) / 100);
+    B = Math.round((B * (100 + percent)) / 100);
 
-    R = (R<255)?R:255;  
-    G = (G<255)?G:255;  
-    B = (B<255)?B:255;  
+    R = R < 255 ? R : 255;
+    G = G < 255 ? G : 255;
+    B = B < 255 ? B : 255;
 
-    const RR = ((R.toString(16).length===1)?"0"+R.toString(16):R.toString(16));
-    const GG = ((G.toString(16).length===1)?"0"+G.toString(16):G.toString(16));
-    const BB = ((B.toString(16).length===1)?"0"+B.toString(16):B.toString(16));
+    const RR = R.toString(16).length === 1 ? '0' + R.toString(16) : R.toString(16);
+    const GG = G.toString(16).length === 1 ? '0' + G.toString(16) : G.toString(16);
+    const BB = B.toString(16).length === 1 ? '0' + B.toString(16) : B.toString(16);
 
-    return "#"+RR+GG+BB;
+    return '#' + RR + GG + BB;
   }
 }
