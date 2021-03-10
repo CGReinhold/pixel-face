@@ -40,7 +40,7 @@ export default class Avatar {
   private nose: Nose;
   private resolution: number;
 
-  constructor(config?: { eye?: Eye; hair?: Hair; face?: Face; mouth?: Mouth; nose?: Nose; resolution?: number }) {
+  constructor(config: { eye?: Eye; hair?: Hair; face?: Face; mouth?: Mouth; nose?: Nose; resolution?: number } | undefined = undefined) {
     this.hair = config?.hair || {
       color: '#' + Math.floor(Math.random() * 16777215).toString(16),
       length: this.randomNumber(0, 10),
@@ -346,7 +346,7 @@ export default class Avatar {
         }
 
         for (let j = startX; j < endX; j++) {
-          if (face[heightStartIndex + i][j] === '#fff') {
+          if (face[heightStartIndex + i] && face[heightStartIndex + i][j] === '#fff') {
             face[heightStartIndex + i][j] = this.hair.color;
           }
         }
