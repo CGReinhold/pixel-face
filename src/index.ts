@@ -481,7 +481,7 @@ export default class Avatar {
       }
     }
 
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 8" shape-rendering="crispEdges">${innerSVG}</svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${this.getImageSize()} ${this.getImageSize()}" shape-rendering="crispEdges">${innerSVG}</svg>`;
   }
 
   private randomNumber(min: number = 0, max: number = 10) {
