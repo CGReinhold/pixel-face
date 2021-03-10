@@ -1,7 +1,6 @@
 {
   "extends": ["tslint:recommended", "tslint-config-prettier"],
   "rules": {
-    "prefer-for-of": "off",
-    "no-console": "off"
+    "no-unnecessary-initializer": false
   }
 }
