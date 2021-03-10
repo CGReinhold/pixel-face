@@ -451,7 +451,7 @@ export default class Avatar {
 
   getHTML(): string {
     const faceBitmap = this.getFace();
-    let innerHTML = '<style>.row {display: flex;} .block{ width: 10px; height: 10px; }</style>';
+    let innerHTML = `<style>.row {display: flex;} .block{ width: ${this.resolution}px; height: ${this.resolution}px; }</style>`;
 
     for (const line of faceBitmap) {
       innerHTML += '<div class="row">';
